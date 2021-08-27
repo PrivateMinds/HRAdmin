@@ -1,0 +1,104 @@
+﻿@model HRModel.GlobalModel
+
+<div style="color:white;background-color:#E9EBEE">
+
+    <div style="height: 40px; background-color: #677083">
+
+        <table id="tableA" style="width:100%">
+            <thead style="background-color:#677083">
+                <tr style="font-family:Arial;font-size:10pt;">
+                    <th style="width:2%"></th>
+                    <th id="Name" class="lblscaling labelclicked" style="width:15%" data-sortorder="DSD">
+                        <div id="divName" style="float: right; margin-top: .7em; margin-right: 29em;"> Name </div>                     
+                    </th>
+                   
+                    <th id="JobTitle" class="lblscaling labelclicked" style="width:15%" data-sortorder="DSD">
+                        <div id="divJobTitle" style="margin-top: .7em;margin-right: 7em ">Job Title</div>
+                    </th>
+                    <th id="EmpID" class="lblscaling labelclicked" style="width:10%" data-sortorder="DSD">
+                        <div id="divEmpID" style="float: left; margin-top: .7em;  ">NUID</div>
+
+                    </th>
+                    <th id="Status" class="lblscaling labelclicked" style="width:10%" data-sortorder="DSD">
+                        <div id="divStatus" style="float: left; margin-top: .7em; margin-left: 2em ">Status</div>
+
+                    </th>
+                    <th id="Supervisor" class="lblscaling labelclicked" style="width:15%" data-sortorder="DSD">
+                        <div id="divSupervisor"  style="float: left; margin-top: .7em; margin-left: 4em">Supervisor</div>
+
+                    </th>
+                    <th id="FTE" class="lblscaling labelclicked" style="width:10%;padding-left:30px" data-sortorder="DSD">
+                        <div id="divFTE" style="float: right; margin-top: .7em; margin-right: 9em">FTE</div>
+                    </th>
+
+                    <th style="width:5%;text-align:center"></th>
+                </tr>
+            </thead>
+
+
+        </table>
+    </div>
+
+    <div id="divGrantForm" style="width:100%;overflow-y: scroll;bottom:10px;height:700px">
+
+        <table id="tableB" style="width:100%" class="table table-bordered  table-responsive">
+
+            @if (Model.ActiveEmployeesListData != null)
+            {
+
+                foreach (var item in Model.ActiveEmployeesListData)
+                {
+
+            <tr class="HandPointer" style="font-family:Arial;font-size:.8em; background-color: #E9EBEE;color:black">
+                @if (@item.FirstName == "No Results Found!")
+                {
+                    <td colspan="7" style="color:red;font-size:1.1em">
+
+                        @item.FirstName
+
+                    </td>
+                }
+
+                else
+                {
+
+                    <td style="width:2%">
+                        <img id="EditEmpRecord" class="imgButton32_Scale" src="~/images/button_CalendarEdit256.png" style="width:25px;height:25px" data-empid="@item.EmpID" title="Click icon to edit record" />
+                    </td>
+                    <td class="ui-sortable-handle" style="width:15%">
+                        @item.LastName @item.FirstName
+                    </td>
+                    <td style="width:15%">
+                        @item.JobTitle
+                    </td>
+
+                    <td style="width:10%">
+
+                        @item.EmpID
+                    </td>
+                    <td style="width:10%">
+
+                        @item.EmployeeStatus
+                    </td>
+                    <td style="width:15%">
+                        @item.SupLastName  @item.SupFirstName
+                    </td>
+
+                    <td style="width:10%">
+                        @item.FTE
+                    </td>
+
+                    @*<td style="width:15%">
+                @item.LeadName
+            </td>*@
+
+                }
+
+
+            </tr>
+                }
+            }
+
+        </table>
+    </div>
+</div>

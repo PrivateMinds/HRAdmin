@@ -1,0 +1,226 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+@Html.AntiForgeryToken()
+<div style="width: 100%; background-color: whitesmoke; margin-top: .7em;">
+    <div class="well-sm" style="font-weight:bold;background-color: #677083;color:white;height:35px">
+        <div style="float:left"><span style="font-size:1.3em">Employee Search Page</span></div>
+        @*<div style="float:left;color:greenyellow;font-size:1.3em;margin-left:30px">
+                This is a test enviroment, changes made here will not be reflected in production.
+            </div>*@
+    </div>
+
+    <div class="c" style="margin-top:.7em;">
+
+        <div class="well-sm" style="font-weight:bold;background-color: #677083;color:white;height:35px;font-size:1.1em">
+
+            @*<div id="imgSearchPopover" title="Search Criteria Popover" style="float:left;"><img src="~/images/info.png" style="width:15px;height:15px;" /></div>*@
+            <div style="float:left;margin-left:.4em;">Search Criteria</div>
+
+            @*<div style="float:right;margin-left:.4em;font-size:.9em"><input id="ChkAdvanced" type="checkbox" title="Check this box to unhide advanced search input fields" /></div>
+                <div style="float:right;margin-left:.2em;font-size:.9em;margin-top:.1em">Advanced</div>
+                <div id="imgAdvancedPopover" title="Advanced feature" style="float:right;"><img src="~/images/info.png" style="width:15px;height:15px;" /></div>*@
+
+        </div>
+        <div class="well" style="width:100%;background-color: #E9EBEE;">
+
+            <div id="divLeftColumn" style="width: 45%;float: left;margin-left:1.5em">
+                <table style="width: 100%; font-size: 1em;">
+                    <tr>
+                        @*<td style="width:5%">
+                                <div id="imgCoreNumPopover" style="float:right;margin-bottom:.5em" title="The Core Number is the first six digits of the R# (not including the “R”)."><img src="~/images/info.png" style="width:15px;height:15px;" /></div>
+                            </td>*@
+                        <td style="width:20%;">
+
+                            Employee name
+                        </td>
+                        <td style="width:70%;">
+                            @Html.TextBox("Employee name", "", new { id = "txtEmployeeName", @class = "form-control", @placeholder = "" })
+
+                        </td>
+                    </tr>
+                    <tr><td style="padding-top:3px"></td></tr>
+                    <tr>
+                        @*<td>
+                                <div id="imgRNumPopover" style="float:right;margin-bottom:.5em"
+                                     title="The R Number is an OS-specific ID# assigned to projects with Key FTE and always begins with “R” followed by 9 numerals.">
+                                    <img src="~/images/info.png" style="width:15px;height:15px;" />
+                                </div>
+                            </td>*@
+                        <td>
+                            NUID
+                        </td>
+                        <td>
+                            @Html.TextBox("NUID", "", new { id = "txtNUID", @class = "form-control", @placeholder = "" })
+
+                        </td>
+                    </tr>
+                    <tr><td style="padding-top:3px"></td></tr>
+                    <tr>
+                        @*<td>
+                                <div id="imgProjectActivityPopover" style="float:right;margin-bottom:.5em"
+                                     title="Project and Activity are assigned in OneLink. The Project ID is constant through the life of the project and begins with RNG (research projects)
+                                     or ADM (core projects) followed by 6 numerals.The Activity ID indicates the current budget year; the format is BUDGXX (e.g., BUDG01) for RNG and FY20XX (e.g., FY2020) for ADM">
+                                    <img src="~/images/info.png" style="width:15px;height:15px;" />
+                                </div>
+
+                            </td>*@
+                        <td>
+                            Person Number
+                        </td>
+                        <td>
+                            @Html.TextBox("Person Number", "", new { id = "txtPersonNumber", @class = "form-control" })
+                        </td>
+                    </tr>
+
+                    <tr><td style="padding-top:3px"></td></tr>
+
+                    <tr>
+
+                        <td>
+                            Status
+                        </td>
+                        <td>
+                            @Html.DropDownListFor(m => m.ViewActiveEmployees.Status, Model.ActiveEmpStatusSelectList, new { @class = "form-control", @id = "cboStatus" })
+
+                            @*@Html.DropDownListFor(m => m.ViewActiveEmployees.EmployeeStatus.Distinct(), new SelectList(Model.StatusList, "EmployeeStatus", "EmployeeStatus"), new { @class = "form-control", @id = "cboStatus" })*@
+
+                            @*@Html.TextBox("Status", "", new { id = "cboStatus", @class = "form-control" })*@
+                        </td>
+                    </tr>
+                    <tr>
+
+                        <td>
+                            Exempt
+                        </td>
+                        <td>
+                            @Html.DropDownList("Exempt", new List<SelectListItem>
+                            {
+                                new SelectListItem{Text="Select Exempt",Value="NULL",Selected=true },
+                                new SelectListItem{Text="Yes",Value="Y" },
+                                new SelectListItem{Text="No",Value="N" },
+                             },
+                             new { @class = "form-control", @id = "cboExempt" })
+                        </td>
+                    </tr>
+
+                    <tr><td style="padding-top:1px"></td></tr>
+
+                </table>
+            </div>
+
+            <div id="divRightColumn" style="width:45%;float:left;margin-left:1.6em">
+
+                <table style="width: 100%; font-size: 1em;">
+                    <tr><td style="padding-top:5px"></td></tr>
+                    <tr>
+                        <td style="width:5%;"></td>
+                        <td style="width:20%;">
+                            Supervisor
+                        </td>
+                        <td style="width:75%;">
+
+                            @Html.TextBox("Supervisor", "", new { id = "txtSupervisor", @class = "form-control", @placeholder = "" })
+
+                        </td>
+                    </tr>
+
+                    <tr><td style="padding-top:3px"></td></tr>
+                    <tr>
+                        <td></td>
+                        <td>
+                            Position Number
+                        </td>
+                        <td>
+
+                            @Html.TextBox("Position Number", "", new { id = "txtPositionNumber", @class = "form-control", @placeholder = "" })
+
+
+                        </td>
+
+                    </tr>
+                    <tr><td style="padding-top:3px"></td></tr>
+                    <tr>
+                        <td></td>
+                        <td>
+                            Job Code
+                        </td>
+                        <td>
+
+                            @Html.TextBox("Position Number", "", new { id = "txtJobCode", @class = "form-control", @placeholder = "" })
+
+
+                        </td>
+
+                    </tr>
+                    <tr><td style="padding-top:3px"></td></tr>
+                    <tr>
+                        <td></td>
+                        <td>
+                            Job Title
+                        </td>
+                        <td>
+                            @Html.TextBox("Position Number", "", new { id = "txtJobTitle", @class = "form-control", @placeholder = "" })
+
+
+                        </td>
+
+                    </tr>
+
+                </table>
+
+            </div>
+            <div id="divButons" style="margin-top:1em">
+                <table style="width: 100%;">
+                    <tr><td style="padding-top:20px"></td></tr>
+                    <tr>
+                        <td style="width:13%"></td>
+                        <td style="width:80%;">
+                            <div>
+                                <div style="float:left;width:30%">
+
+                                    <button id="btnAddNewRecord" type="button" class="btn btn-black">
+                                        <span class="glyphicon glyphicon-plus"></span> Add new Employee
+                                    </button>
+                                </div>
+                                <div style="float:left;width:25%">
+                                    <button id="btnSearchEmployee" type="button" class="btn btn-black">
+                                        <span class="glyphicon glyphicon-search"></span> Search
+                                    </button>
+                                </div>
+                                <div style="float:left;width:25%;">
+                                    <button id="btnReset" type="button" class="btn btn-black">
+                                        <span class="glyphicon glyphicon-refresh"></span> Reset
+                                    </button>
+                                </div>
+                                <div style="float:left;width:20%">
+                                    <button id="btnHome" type="button" class="btn btn-black">
+                                        <span class="glyphicon glyphicon-home"></span>  HOME
+                                    </button>
+
+                                </div>
+                            </div>
+                        </td>
+
+                    </tr>
+
+                </table>
+            </div>
+        </div>
+        <div id="divEmployeeSearchResult" style="width:100%">
+            @await Component.InvokeAsync("EmployeeSearchResults")
+        </div>
+        <div id="divEmployeeDetails" style="width:100%">
+            @await Component.InvokeAsync("EmployeeDetails")
+        </div>
+    </div>
+
+</div>
+@section scripts
+{
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/EmployeeSearchResults.js" asp-append-version="true"></script>
+    <script src="~/js/EmployeeDetails.js" asp-append-version="true"></script>
+}
